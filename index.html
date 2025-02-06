@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Direct DOM</title>
+  </head>
+  <body>
+    <h2>Direct DOM Manipulation</h2>
+    <button onclick="updateList()">
+      Update 1st Item and Show Random Number
+    </button>
+    <h3 id="timeTaken"></h3>
+
+    <p id="randomNumber"></p>
+
+    <h4>List of 1000 item</h4>
+    <ul id="list"></ul>
+
+    <script>
+      const initialItems = [];
+      for (let i = 1; i <= 1000; i++) {
+        initialItems.push(`Item ${i}`);
+      }
+
+      const list = document.getElementById("list");
+
+      function renderList(items) {
+        list.innerHTML = "";
+        items.forEach((item) => {
+          let li = document.createElement("li");
+          li.textContent = item;
+          list.appendChild(li);
+        });
+      }
+
+      renderList(initialItems);
+
+      function updateList() {
+        const timeTakenElement = document.getElementById("timeTaken");
+        const randomNumberElement = document.getElementById("randomNumber");
+
+        // Start time measurement
+        const start = performance.now();
+
+        const updatedItems = [...initialItems];
+        updatedItems[0] = "Updated Item 1";
+
+        // Render the updated list
+        renderList(updatedItems);
+
+        // End time measurement
+        const end = performance.now();
+
+        // Calculate and display the time taken
+        const timeTaken = (end - start).toFixed(2);
+        timeTakenElement.textContent = `Time taken to update 1st item: ${timeTaken} ms`;
+
+        // Display a random number between 1 and 1000
+        const randomNum = Math.floor(Math.random() * 1000) + 1;
+        randomNumberElement.textContent = `Random Number: ${randomNum}`;
+      }
+    </script>
+  </body>
+</html>
